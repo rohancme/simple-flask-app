@@ -1,5 +1,5 @@
-from source.app import get_resp_dict
-from source.app import app
+from src.app import get_resp_dict
+from src.app import app
 import pytest
 
 

@@ -2,3 +2,5 @@ flask
 requests
 pytest
 pytest-cov
+coverage
+tox
