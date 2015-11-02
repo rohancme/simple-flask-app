@@ -17,8 +17,7 @@ def party_gif():
 
     if resp['data']['image_url']:
         img_url = resp['data']['image_url']
-        return 'haha'
-        # return '<img src=' + img_url + '>'
+        return '<img src=' + img_url + '>'
 
 
 def get_resp_dict(url):
