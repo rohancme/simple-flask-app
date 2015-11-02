@@ -27,3 +27,9 @@ pip install -r test_requirements.txt
 ```
 py.test test
 ```
+
+## Ensure build is successfull
+
+```
+tox
+```
