@@ -1,8 +1,8 @@
 # simple-flask-app
-A simple flask app to use in learning about CI etc
 
 ![Build Status](https://travis-ci.org/rchakra3/simple-flask-app.svg?branch=master)
 
+A simple flask app to use in learning about CI etc
 
 ## Setup
 
@@ -35,3 +35,8 @@ py.test test
 ```
 tox
 ```
+
+## Contributing
+
+- The master branch is protected. This means no forced pushes and no merges with branches that are breaking the build.
+- Submit a pull request to check the status of your build
