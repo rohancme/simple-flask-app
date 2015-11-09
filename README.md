@@ -12,10 +12,18 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
+### Setting up the Redis instance
+Install Redis and run on <REDIS_HOST_URL>:<REDIS_PORT_NUMBER>
+In the `feature-flag.ini` file, change the following parameters:
+```
+redis.host=<REDIS_HOST_URL>
+redis.port=<REDIS_PORT_NUMBER>
+```
+
 ## Running the app
 
 ```
-python source/app.py
+python src/app.py
 ```
 
 ## Setup [Tests]
@@ -30,7 +38,7 @@ pip install -r test_requirements.txt
 py.test test
 ```
 
-## Ensure build is successfull
+## Ensure build is successful
 
 ```
 tox
