@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import abort
 from flask import make_response
-from FeatureFlag import FeatureFlag 
+from fflag import FeatureFlag 
 import requests
 
 app = Flask(__name__)
