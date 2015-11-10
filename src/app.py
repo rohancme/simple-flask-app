@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import abort
 from flask import make_response
-from fflag import FeatureFlag 
+from fflag import FeatureFlag
 import requests
 
 app = Flask(__name__)
@@ -10,6 +10,7 @@ giphy_string = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="
 retries = 5
 
 f = FeatureFlag()
+
 
 @app.route('/')
 def party_gif():
@@ -21,6 +22,7 @@ def party_gif():
         img_url = resp['data']['image_url']
         return '<img src=' + img_url + '>'
 
+
 @app.route('/new')
 def new_feature():
     if f.get_feature_flag('new_feature'):
@@ -28,19 +30,24 @@ def new_feature():
     else:
         abort(404)
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     return '<h1>No such URL exists</h1>', 404
+
 
 def get_resp_dict(url):
     tries_left = retries
 
     while(tries_left > 0):
-        resp = requests.get(url)
-        resp = resp.json()
-        if resp['meta']:
-            if resp['meta']['status'] == 200:
-                return resp
+        try:
+            resp = requests.get(url)
+            resp = resp.json()
+            if resp['meta']:
+                if resp['meta']['status'] == 200:
+                    return resp
+        except Exception:
+            pass
         tries_left -= 1
     return None
 
