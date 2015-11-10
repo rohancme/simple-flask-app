@@ -19,11 +19,11 @@ else:
     try:
         feat_flag = FeatureFlag()
     except IOError:
-        print "No redis config"
-        exit(1)
+        print "WARNING: No redis config"
+        redis_mode = False
     except ConnectionError:
-        print "Invalid Redis server"
-        exit(1)
+        print "WARNING: Invalid Redis server"
+        redis_mode = False
 
 
 @app.route('/')
