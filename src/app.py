@@ -2,14 +2,28 @@ from flask import Flask
 from flask import abort
 from flask import make_response
 from fflag import FeatureFlag
+from redis.exceptions import ConnectionError
 import requests
+import sys
 
 app = Flask(__name__)
 
 giphy_string = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="
 retries = 5
 
-f = FeatureFlag()
+redis_mode = True
+
+if len(sys.argv) > 1 and sys.argv[1] == 'no-redis':
+    redis_mode = False
+else:
+    try:
+        feat_flag = FeatureFlag()
+    except IOError:
+        print "No redis config"
+        exit(1)
+    except ConnectionError:
+        print "Invalid Redis server"
+        exit(1)
 
 
 @app.route('/')
@@ -25,10 +39,10 @@ def party_gif():
 
 @app.route('/new')
 def new_feature():
-    if f.get_feature_flag('new_feature'):
-        return "This is the new feature"
-    else:
-        abort(404)
+    if redis_mode:
+        if feat_flag.get_feature_flag('new_feature'):
+            return "This is the new feature"
+    abort(404)
 
 
 @app.errorhandler(404)
