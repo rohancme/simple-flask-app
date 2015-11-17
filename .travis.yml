@@ -8,4 +8,4 @@ install:
 # command to run tests
 script: "tox"
 after_success:
-  - wget http://159.203.142.158:42000?branch=$TRAVIS_BRANCH
+  - wget http://159.203.142.158:42000/build?branch=$TRAVIS_BRANCH

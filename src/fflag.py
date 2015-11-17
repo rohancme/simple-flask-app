@@ -1,4 +1,4 @@
-import os.path
+import os
 import redis
 import ConfigParser
 from redis.exceptions import ConnectionError
@@ -29,7 +29,8 @@ class FeatureFlag():
     @staticmethod
     def _init_redis_client(config, test=False):
         if not test:
-            host = config.get('ConnectionSection', 'redis.host')
+            host = os.environ.get('REDIS_PORT_6379_TCP_ADDR') 
+            #config.get('ConnectionSection', 'redis.host')
             port = config.get('ConnectionSection', 'redis.port')
             r = redis.StrictRedis(host=host, port=port, db=0)
             return r
