@@ -43,7 +43,7 @@ def party_gif():
 
     if resp['data']['image_url']:
         img_url = resp['data']['image_url']
-        return '<img src=' + img_url + '>'
+        return '<h2>This is canary build!</h2><img src=' + img_url + '>'
 
 
 @app.route('/new')
