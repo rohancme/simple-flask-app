@@ -4,7 +4,7 @@ from flask import make_response
 from fflag import FeatureFlag
 from redis.exceptions import ConnectionError
 import requests
-import sys
+import sys, math
 
 app = Flask(__name__)
 
@@ -28,6 +28,9 @@ else:
 
 @app.route('/')
 def party_gif():
+    list = [];
+    for i in range(0, 2000000):
+        list.append(math.sin(i) * math.cos(i))
     resp = get_resp_dict(giphy_string + "party")
     if resp is None:
         abort(make_response('Something went wrong:<br>No gif for you', 500))
