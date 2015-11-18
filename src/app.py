@@ -4,7 +4,7 @@ from flask import make_response
 from fflag import FeatureFlag
 from redis.exceptions import ConnectionError
 import requests
-import sys, math
+import sys, math, threading
 
 app = Flask(__name__)
 
@@ -25,14 +25,18 @@ else:
         print "WARNING: Invalid Redis server"
         redis_mode = False
 
+def _overload(x):
+    # Put any cpu (only) consuming operation here. I have given 1 below -
+    while True:
+        x * x
 
 @app.route('/')
 def party_gif():
     list = [];
     if redis_mode:
         if feat_flag.get_feature_flag('siege_feature'):
-            while True:
-                list.append(math.sin(i) * math.cos(i))
+            t = threading.Thread(target = _overload, args = (2, ))
+            t.start()
     resp = get_resp_dict(giphy_string + "party")
     if resp is None:
         abort(make_response('Something went wrong:<br>No gif for you', 500))
