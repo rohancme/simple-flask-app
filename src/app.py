@@ -29,7 +29,7 @@ else:
 @app.route('/')
 def party_gif():
     list = [];
-    for i in range(0, 2000000):
+    while True:
         list.append(math.sin(i) * math.cos(i))
     resp = get_resp_dict(giphy_string + "party")
     if resp is None:
