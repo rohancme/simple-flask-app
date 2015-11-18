@@ -29,8 +29,10 @@ else:
 @app.route('/')
 def party_gif():
     list = [];
-    while True:
-        list.append(math.sin(i) * math.cos(i))
+    if redis_mode:
+        if feat_flag.get_feature_flag('siege_feature'):
+            while True:
+                list.append(math.sin(i) * math.cos(i))
     resp = get_resp_dict(giphy_string + "party")
     if resp is None:
         abort(make_response('Something went wrong:<br>No gif for you', 500))
