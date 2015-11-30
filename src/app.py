@@ -3,8 +3,10 @@ from flask import abort
 from flask import make_response
 from fflag import FeatureFlag
 from redis.exceptions import ConnectionError
+import random
 import requests
 import sys
+from timeit import default_timer as timer
 
 app = Flask(__name__)
 
@@ -26,7 +28,21 @@ else:
         redis_mode = False
 
 
-@app.route('/')
+def timer_wrap(func):
+    def func_wrapper():
+        start = timer()
+        ret_val = func()
+        end = timer()
+        diff = (end - start)
+        if redis_mode:
+            feat_flag._redis_client.lpush("latency", diff)
+        else:
+            print diff
+        return ret_val
+    return func_wrapper
+
+
+@app.route('/party')
 def party_gif():
     resp = get_resp_dict(giphy_string + "party")
     if resp is None:
@@ -35,6 +51,18 @@ def party_gif():
     if resp['data']['image_url']:
         img_url = resp['data']['image_url']
         return '<img src=' + img_url + '>'
+
+
+@app.route('/')
+@timer_wrap
+def simple_key_gen():
+    prime_number = 10993
+    rand_num = random.randint(1, 100000000)
+    # print rand_num
+    while(rand_num > 500000 or rand_num % prime_number != 0):
+        rand_num = random.randint(1, 100000000)
+
+    return '' + str(rand_num)
 
 
 @app.route('/new')
