@@ -56,10 +56,10 @@ def party_gif():
 @app.route('/')
 @timer_wrap
 def simple_key_gen():
-    prime_number = 10993
+    prime_number = 5743
     rand_num = random.randint(1, 100000000)
     # print rand_num
-    while(rand_num > 500000 or rand_num % prime_number != 0):
+    while(rand_num > 1000000 or rand_num % prime_number != 0):
         rand_num = random.randint(1, 100000000)
 
     return '' + str(rand_num)
@@ -95,4 +95,4 @@ def get_resp_dict(url):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=7000)
